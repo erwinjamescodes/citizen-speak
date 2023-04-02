@@ -27,10 +27,10 @@ const index = () => {
       </Head>
 
       <main className="w-[100vw] flex justify-center flex-col items-center">
-        <HeroSection />
-        <Benefits />
-        <Services />
-        <CallToAction />
+        <HeroSection/>
+        <Benefits/>
+        <Services/>
+        <CallToAction/>
       </main>
     </>
   );
