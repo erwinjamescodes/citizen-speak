@@ -1,10 +1,16 @@
 import "../styles/globals.css";
-import { MapProvider } from "react-map-gl";
+import { ChakraProvider } from "@chakra-ui/react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import useUrlPaths from "../utils/useCurrentUrl";
 
 export default function App({ Component, pageProps }) {
+  const currentUrl = useUrlPaths();
   return (
-    <MapProvider>
+    <ChakraProvider>
+      {currentUrl !== "login" && <Navbar />}
       <Component {...pageProps} />
-    </MapProvider>
+      {currentUrl !== "login" && <Footer />}
+    </ChakraProvider>
   );
 }

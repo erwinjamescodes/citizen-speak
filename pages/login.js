@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import useUsernameStore from "../store/userNameStore";
+import useUsernameStore from "../store/useUsernameStore";
 import Router from "next/router";
-import Logo from "../assets/lubak-logo.png";
+import Logo from "../assets/EciLogo.png";
 import Image from "next/image";
 
 export default function Login() {
@@ -17,6 +17,14 @@ export default function Login() {
   const [error, setError] = useState(false);
   const { currentUsername, setCurrentUsername, userType, setUserType } =
     useUsernameStore();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.localStorage.getItem("citizenSpeakUser")) {
+        Router.push({ pathname: "/" });
+      }
+    }
+  }, []);
 
   const onSubmit = async (data) => {
     const user = {
@@ -42,14 +50,14 @@ export default function Login() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (currentUsername) {
-        window.localStorage.setItem("lubakUser", currentUsername);
-        window.localStorage.setItem("lubakUserType", userType);
+        window.localStorage.setItem("citizenSpeakUser", currentUsername);
+        window.localStorage.setItem("citizenSpeakUserType", userType);
       }
     }
   }, [currentUsername]);
 
   return (
-    <div className="bg-white h-[100vh] w-[100%] flex items-center justify-center px-4 ">
+    <div className="bg-white h-[100vh] w-[100%] flex items-center justify-center px-4 main-bg">
       <div className=" h-[100vh] bg-container absolute"></div>
       <div className="bg-white shadow-xl max-w-[600px] w-[100%] flex justify-center flex-col items-center rounded-md z-40 py-10">
         <div className="flex flex-col items-center mb-8 ">
@@ -63,14 +71,14 @@ export default function Login() {
             }}
           ></Image>
           <h1
-            className="text-2xl uppercase font-semibold cursor-pointer"
+            className="text-2xl  font-semibold cursor-pointer"
             onClick={() => {
               Router.push({ pathname: "/" });
             }}
           >
-            Lubak Tracker
+            Citizen Speak!
           </h1>
-          <h2 className="font-semibold text-3xl mt-5">LOG IN</h2>
+          <h2 className="font-semibold text-3xl mt-5">ADMIN LOG IN</h2>
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -117,12 +125,7 @@ export default function Login() {
             </span>
           )}
         </form>
-        <p className="mt-8">
-          Don't have an account?{" "}
-          <Link href={"/register"}>
-            <span className="font-semibold">Register.</span>
-          </Link>
-        </p>
+        <p className="mt-8">For assistance, contact the IT Department.</p>
       </div>
     </div>
   );

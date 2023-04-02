@@ -1,29 +1,27 @@
 import { create } from "zustand";
+import moment from "moment";
 
 const useFilterStore = create((set) => ({
-  intensityFilter: 0,
-  statusFilter: [],
-  submissionFilter: false,
-
-  setIntensityFilter: (intensity) =>
-    set(() => ({
-      intensityFilter: intensity,
-    })),
-
-  setStatusFilter: (status) =>
-    set((state) => ({ statusFilter: [...state.statusFilter, status] })),
-  removeStatusFilter: (status) =>
+  categoryFilter: [],
+  setCategoryFilter: (category) =>
+    set((state) => ({ categoryFilter: [...state.categoryFilter, category] })),
+  removeCategoryFilter: (category) =>
     set((state) => ({
-      statusFilter: state.statusFilter.filter((stat) => stat !== status),
+      categoryFilter: state.categoryFilter.filter((cat) => cat !== category),
     })),
-  resetStatusFilter: () => {
-    set(() => ({ statusFilter: [] }));
+  resetCategoryFilter: () => {
+    set(() => ({ categoryFilter: [] }));
   },
 
-  setSubmissionFilter: () =>
-    set((state) => ({ submissionFilter: !state.submissionFilter })),
-  resetSubmissionFilter: () => {
-    set(() => ({ submissionFilter: false }));
+  startDate: "2023-01-01",
+  endDate: moment(new Date()).format("YYYY-MM-DD"),
+  setStartDate: (date) => set(() => ({ startDate: date })),
+  setEndDate: (date) => set(() => ({ endDate: date })),
+  resetStartDate: () => {
+    set((state) => ({ startDate: "2023-01-01" }));
+  },
+  resetEndDate: () => {
+    set((state) => ({ endDate: moment(new Date()).format("YYYY-MM-DD") }));
   },
 }));
 

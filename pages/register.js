@@ -27,10 +27,7 @@ export default function Register() {
     };
 
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_API}/api/users/register`,
-        newUser
-      );
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/api/users/register`, newUser);
       setError(false);
       setSuccess(true);
       setTimeout(() => {
