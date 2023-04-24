@@ -188,11 +188,11 @@ function Navbar() {
             >
               <Button
                 color={"white"}
-                bg={"blue.600"}
+                bg={"orange.600"}
                 rounded={"full"}
                 px={6}
                 _hover={{
-                  bg: "blue.500",
+                  bg: "orange.500",
                 }}
               >
                 File a Report
