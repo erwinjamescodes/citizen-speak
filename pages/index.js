@@ -7,7 +7,6 @@ import CallToAction from "../components/Home/CallToAction";
 import useUsernameStore from "../store/useUsernameStore";
 
 const index = () => {
-  
   const { currentUsername, setCurrentUsername, userType, setUserType } =
     useUsernameStore();
   useEffect(() => {
@@ -16,6 +15,8 @@ const index = () => {
       setUserType(window.localStorage.getItem("citizenSpeakUserType"));
     }
   }, [currentUsername]);
+
+
 
   return (
     <>
@@ -27,10 +28,10 @@ const index = () => {
       </Head>
 
       <main className="w-[100vw] flex justify-center flex-col items-center">
-        <HeroSection/>
-        <Benefits/>
-        <Services/>
-        <CallToAction/>
+        <HeroSection />
+        <Benefits />
+        <Services />
+        <CallToAction />
       </main>
     </>
   );

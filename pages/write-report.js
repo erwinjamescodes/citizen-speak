@@ -45,17 +45,15 @@ const writeReport = () => {
       resolutionDate: null,
     };
 
-    // setIsLoading(true);
-    try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_API}/api/reports`,
-        userInput
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    const response = await fetch("/api/reports", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInput),
+    });
 
-    // setIsLoading(false);
+    const responseJson = await response.json();
     router.push("/transparency-board");
   };
 

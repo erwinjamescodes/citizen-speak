@@ -7,7 +7,7 @@ const SkeletonPost = () => {
     const skeletonPosts = [];
     for (let i = 0; i < 4; i++) {
       skeletonPosts.push(
-        <Card className="max-w-[1100px] w-[100%]" p={8} mb={2}>
+        <Card className="max-w-[1100px] w-[100%]" p={8} mb={4}>
           <Stack width="full">
             <Skeleton
               height="10px"

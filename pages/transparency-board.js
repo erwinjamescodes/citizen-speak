@@ -41,7 +41,7 @@ const transparencyBoard = () => {
   const { reports, setReports, updateReport } = useReportsStore();
   const { currentUsername, setCurrentUsername, userType, setUserType } =
     useUsernameStore();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const {
     isOpen: isOpenReportDetails,
@@ -65,21 +65,13 @@ const transparencyBoard = () => {
   const [isLessThan600] = useMediaQuery("(max-width: 600px)");
 
   useEffect(() => {
-    getReports();
+    (async () => {
+      const getReports = await fetch("/api/reports");
+      const getReportsJson = await getReports.json();
+      setReports(getReportsJson);
+      setLoading(false);
+    })();
   }, []);
-
-  const getReports = async () => {
-    setLoading(true);
-    try {
-      const allReports = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API}/api/reports`);
-      setReports(allReports.data);
-    } catch (err) {
-      console.log(err);
-    }
-    setLoading(false);
-  };
-
-
 
   useEffect(() => {
     if (modalData) {
@@ -124,26 +116,56 @@ const transparencyBoard = () => {
     onOpenReportDetails();
   };
 
-  const handleDeleteClick = async (id) => {
+  const handleDeleteClick = async (_id) => {
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_API}/api/reports/${id}`);
-      setReports(reports.filter((report) => report._id !== id));
+      const response = await axios.delete("/api/reports", {
+        data: { _id: _id },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setReports(reports.filter((report) => report._id !== _id));
     } catch (err) {
       console.log(err);
     }
   };
 
+  // const handleUpdateStatus = async (id, updates) => {
+  //   try {
+  //     const res = await axios.put(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_API}/api/reports/${id}`,
+  //       {
+  //         status: updates.newStatus,
+  //         resolutionDate: updates.resolutionDate,
+  //         resolution: updates.resolution,
+  //       }
+  //     );
+  //     updateReport(id, res.data);
+  //     getReports();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const handleUpdateStatus = async (id, updates) => {
     try {
-      const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_API}/api/reports/${id}`, {
-        status: updates.newStatus,
-        resolutionDate: updates.resolutionDate,
-        resolution: updates.resolution,
-      });
-      updateReport(id, res.data);
+      const response = await axios.put(
+        `/api/reports/${id}`,
+        {
+          status: updates.newStatus,
+          resolutionDate: updates.resolutionDate,
+          resolution: updates.resolution,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      updateReport(id, response.data);
       getReports();
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
