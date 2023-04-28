@@ -21,6 +21,8 @@ import { useRouter } from "next/router";
 
 const writeReport = () => {
   const [isLessThan600] = useMediaQuery("(max-width: 600px)");
+  const [isLessThan768] = useMediaQuery("(max-width: 768px)");
+  const [isLoading, setIsLoading] = useState(false);
   const [userPost, setUserPost] = useState({
     name: "",
     address: null,
@@ -45,7 +47,7 @@ const writeReport = () => {
       resolutionDate: null,
     };
 
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_API}/api/reports`,
@@ -55,7 +57,7 @@ const writeReport = () => {
       console.log(err);
     }
 
-    // setIsLoading(false);
+    setIsLoading(false);
     router.push("/transparency-board");
   };
 
@@ -106,20 +108,15 @@ const writeReport = () => {
           </Heading>
           <form className="w-[100%] flex flex-col">
             {/* FORM */}
-            <Box className="w-[100%] pb-4 border-b-2">
+            <Box className="w-[100%] pb-4 border-b-2 mb-4">
               <Stack textAlign={"center"} spacing={{ base: 4 }}>
                 <Stack
-                  direction={"row"}
+                  direction={isLessThan768 ? "column" : "row"}
                   className="w-full"
                   spacing={{ base: 4 }}
                 >
                   <input
-                    //   value={
-                    //     userPost.name === "" || userPost.name === "null"
-                    //       ? ""
-                    //       : userPost.name
-                    //   }
-                    className={`border p-4 rounded-md focus:outline-none w-1/2 ${
+                    className={`border p-4 rounded-md focus:outline-none md:w-1/2 ${
                       isLessThan600 ? "text-sm" : ""
                     }`}
                     placeholder="Name (Optional)"
@@ -137,7 +134,7 @@ const writeReport = () => {
                         address: e.target.value,
                       }));
                     }}
-                    className={`px-3 w-1/2 py-1 rounded-md text-lg  cursor-pointer border bg-white `}
+                    className={`px-3 md:w-1/2 py-1 rounded-md text-lg  cursor-pointer border bg-white `}
                     defaultValue={"Address (Optional)"}
                   >
                     {barangays.map((brgy, index) => {
@@ -154,17 +151,12 @@ const writeReport = () => {
                   </select>
                 </Stack>
                 <Stack
-                  direction={"row"}
+                  direction={isLessThan768 ? "column" : "row"}
                   className="w-full"
                   spacing={{ base: 4 }}
                 >
                   <input
-                    //   value={
-                    //     userPost.name === "" || userPost.name === "null"
-                    //       ? ""
-                    //       : userPost.name
-                    //   }
-                    className={`border p-4 rounded-md focus:outline-none w-1/2 ${
+                    className={`border p-4 rounded-md focus:outline-none md:w-1/2 ${
                       isLessThan600 ? "text-sm" : ""
                     }`}
                     placeholder="Mobile Number (Optional)"
@@ -176,12 +168,7 @@ const writeReport = () => {
                     }}
                   ></input>
                   <input
-                    //   value={
-                    //     userPost.name === "" || userPost.name === "null"
-                    //       ? ""
-                    //       : userPost.name
-                    //   }
-                    className={`border p-4 rounded-md focus:outline-none w-1/2 ${
+                    className={`border p-4 rounded-md focus:outline-none md:w-1/2 ${
                       isLessThan600 ? "text-sm" : ""
                     }`}
                     placeholder="Email Address (Optional)"
@@ -217,7 +204,6 @@ const writeReport = () => {
                   })}
                 </select>
                 <textarea
-                  //   value={userPost.postBody === "" ? "" : userPost.postBody}
                   className={`border p-4 rounded-md focus:outline-none h-[250px] ${
                     isLessThan600 ? "text-sm" : ""
                   }`}
@@ -240,49 +226,23 @@ const writeReport = () => {
                 1500
               </p>
             </Box>
-            {/* BUTTONS */}
-            <Stack
-              direction="row"
-              mt={4}
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Stack>
-                <Text className="text-red-600 italic">
-                  Note: Contact information provided will be kept confidential
-                  and will only be used to follow-up for additional information
-                  about the report.
-                </Text>
-              </Stack>
-              <Stack direction={"row"}>
-                <Button
-                  bg={"red.600"}
-                  _hover={{
-                    bg: "red.500",
-                  }}
-                  rounded={"full"}
-                  px={6}
-                  color={"white"}
-                  fontSize={{ base: "xs", sm: "md" }}
-                  // type="submit"
-                  // disabled={
-                  //   userPost.title === "" ||
-                  //   userPost.title === null ||
-                  //   userPost.title === "null" ||
-                  //   userPost.postBody === "" ||
-                  //   userPost?.selectedCategories?.length === 0 ||
-                  //   postBodyLength > 1500
-                  // }
-                  onClick={() => {
-                    handleSubmit();
-                    // alert(form.data);
-                  }}
-                >
-                  {/* {!isLoading ? "Post" : "Posting..."} */}
-                  Submit Report
-                </Button>
-              </Stack>
-              {/* {isLoading ? <Spinner color="red.500" /> : null} */}
+
+            <Stack direction={"row"} alignSelf={"end"}>
+              <Button
+                bg={"red.600"}
+                _hover={{
+                  bg: "red.500",
+                }}
+                rounded={"full"}
+                px={6}
+                color={"white"}
+                fontSize={{ base: "xs", sm: "md" }}
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                {!isLoading ? "Submit Report" : "Submitting..."}
+              </Button>
             </Stack>
           </form>
         </Flex>

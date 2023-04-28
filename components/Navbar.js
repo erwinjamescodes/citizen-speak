@@ -72,14 +72,14 @@ function Navbar() {
             >
               Transparency Board
             </Link>
-            <Link
+            {/* <Link
               href="/analytics"
               className={`${
                 currentUrl === "analytics" ? "text-orange-300" : ""
               }`}
             >
               Analytics
-            </Link>
+            </Link> */}
             <Link href="/write-report">
               <Button
                 color={"white"}
@@ -134,11 +134,7 @@ function Navbar() {
           <div
             onClick={handleToggle}
             className={`md:hidden z-50 cursor-pointer ${
-              currentUrl === ""
-                ? "text-black"
-                : nav
-                ? "text-black"
-                : "text-white"
+              nav ? "text-black" : "text-white"
             }`}
           >
             {!nav ? (
@@ -171,14 +167,14 @@ function Navbar() {
             >
               Transparency Board
             </Link>
-            <Link
+            {/* <Link
               href="/analytics"
               onClick={() => {
                 setTimeout(setNav(!nav), 500);
               }}
             >
               Analytics
-            </Link>
+            </Link> */}
 
             <Link
               href="/write-report"
