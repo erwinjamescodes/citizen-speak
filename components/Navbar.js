@@ -38,12 +38,12 @@ function Navbar() {
 
   return (
     <Container
-      maxW={"100%"}
+      maxW={"100vw"}
       className={`h-[100px] flex justify-center transition-all fixed z-50 ${
         scrollPosition > 100 ? "shadow-lg" : ""
       }`}
-      bg={currentUrl === "" ? "white" : "blue.800"}
-      color={currentUrl === "" ? "black" : "white"}
+      bg={"blue.800"}
+      color={"white"}
     >
       <Flex
         alignItems="center"

@@ -7,7 +7,6 @@ import CallToAction from "../components/Home/CallToAction";
 import useUsernameStore from "../store/useUsernameStore";
 
 const index = () => {
-  
   const { currentUsername, setCurrentUsername, userType, setUserType } =
     useUsernameStore();
   useEffect(() => {
@@ -26,11 +25,11 @@ const index = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="w-[100vw] flex justify-center flex-col items-center">
-        <HeroSection/>
-        <Benefits/>
-        <Services/>
-        <CallToAction/>
+      <main className="max-w-[100vw] flex justify-center flex-col items-center overflow-x-hidden">
+        <HeroSection />
+        <Benefits />
+        <Services />
+        <CallToAction />
       </main>
     </>
   );

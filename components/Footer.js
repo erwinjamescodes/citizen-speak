@@ -9,12 +9,12 @@ const Footer = () => {
   const [isLessThan600] = useMediaQuery("(max-width: 600px)");
   return (
     <Flex
-      className={`w-[100vw] h-[auto] py-10 text-white`}
+      className={`h-[auto] py-10 text-white`}
       bg={colorMode === "light" ? "blue.800" : "gray.900"}
     >
       <Container
         maxW={"1440px"}
-        className={`w-[100%] flex items-start  h-[100%] ${
+        className={` flex items-start h-[100%] ${
           isLessThan600
             ? "justify-center items-center text-center"
             : "justify-between "
